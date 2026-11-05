@@ -1,0 +1,38 @@
+# Environment for notebooks/data_converter.ipynb
+#   conda env create -f environment_data-converter.yml
+#   conda activate data-converter
+#
+# Mirrors the `pdal_env` env the notebook was developed and run in (Windows, miniforge).
+# PDAL, cfgrib/ecCodes and netCDF come from conda-forge; rasterio and pyogrio are the
+# pip wheels (they bundle their own GDAL: 3.10 for rasterio, 3.12 for pyogrio).
+name: data-converter
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pdal=2.10            # point clouds -> COPC (writers.copc)
+  - python-pdal=3.5
+  - libgdal-core=3.13    # GDAL used by PDAL
+  - libgdal-tiledb       # TileDB point-cloud arrays (optional)
+  - libgdal-hdf5
+  - cfgrib=0.9.15        # GRIB datacubes
+  - eccodes=2.48
+  - netcdf4=1.7          # netCDF datacubes
+  - zarr=3.1             # Zarr v3 output
+  - numpy=2.4
+  - pandas=3.0
+  - ipykernel
+  - pip
+  - pip:
+      - rasterio==1.4.4
+      - pyogrio==0.13.0
+      - geopandas==1.1.4
+      - shapely==2.1.2
+      - pyproj==3.7.2
+      - pyarrow==25.0.1
+      - xarray==2026.7.0
+      - rioxarray==0.19.0
+      - dask
+      - geoparquet-io==1.4.0
+      - pystac==1.15.2
+      - py7zr               # optional: only needed to read .7z archives
