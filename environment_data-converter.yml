@@ -1,6 +1,7 @@
-# Environment for notebooks/data_converter.ipynb
+# Environment for data_converter.ipynb
 #   conda env create -f environment_data-converter.yml
 #   conda activate data-converter
+#   jupyter lab data_converter.ipynb
 #
 # Mirrors the `pdal_env` env the notebook was developed and run in (Windows, miniforge).
 # PDAL, cfgrib/ecCodes and netCDF come from conda-forge; rasterio and pyogrio are the
@@ -22,6 +23,7 @@ dependencies:
   - numpy=2.4
   - pandas=3.0
   - ipykernel
+  - jupyterlab           # or open the notebook in VS Code with this env's kernel
   - pip
   - pip:
       - rasterio==1.4.4
