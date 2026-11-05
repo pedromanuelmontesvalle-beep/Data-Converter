@@ -17,7 +17,7 @@ Archives (`.zip`, `.7z`, `.tar*`, `.gz`, `.bz2`, `.xz`) are extracted and their 
 
 | File | Purpose |
 |---|---|
-| `notebooks/data_converter.ipynb` | The whole pipeline: discovery → check & fix → UUID → convert → manifest → validation → STAC |
+| `data_converter.ipynb` | The whole pipeline: discovery → check & fix → UUID → convert → manifest → validation → STAC |
 | `environment_data-converter.yml` | Conda environment (PDAL, GDAL, cfgrib, zarr, geoparquet-io, pystac, …) |
 
 The notebook does not import any local modules, so it only needs the environment and your input data.
@@ -29,7 +29,7 @@ The notebook does not import any local modules, so it only needs the environment
 ```bash
 conda env create -f environment_data-converter.yml
 conda activate data-converter
-jupyter lab notebooks/data_converter.ipynb    # or open it in VS Code with the data-converter kernel
+jupyter lab data_converter.ipynb    # or open it in VS Code with the data-converter kernel
 ```
 
 Notes:
@@ -43,7 +43,7 @@ Notes:
 1. **Configure** (cell 2):
 
    ```python
-   DATA_DIR = Path("../data").resolve()   # where inputs live (relative to notebooks/)
+   DATA_DIR = Path("data").resolve()      # where inputs live: a data/ folder next to the notebook
    OUT_DIR  = DATA_DIR / "cng"            # all outputs go here
    WORK_DIR = OUT_DIR / "_work"           # extracted archives + temporary VRTs
 
@@ -57,7 +57,8 @@ Notes:
 2. **List your inputs** and run:
 
    ```python
-   inputs = [DATA_DIR / "my_layer.geojson", DATA_DIR / "dem_tiles.zip", DATA_DIR / "survey.las"]
+   inputs = [DATA_DIR / "my_layer.geojson", DATA_DIR / "dem_tiles.zip", DATA_DIR / "elevation.tif",
+             DATA_DIR / "weather.nc", DATA_DIR / "survey.las"]
    results = run_pipeline(inputs)
 
    # or a whole folder, walked recursively:
@@ -66,7 +67,7 @@ Notes:
 
    `run_pipeline` returns a DataFrame with one row per output: status, kind, input, output, CRS, count, the fixes it applied, warnings, any error, and the time taken.
 
-3. **Validate** the outputs (cell 15). This re-opens every `ok` output and checks that it really is a GeoParquet, COG, Zarr or COPC with the right UUID.
+3. **Validate** the outputs (the `validate_output` cell). This re-opens every `ok` output and checks that it really is a GeoParquet, COG, Zarr or COPC with the right UUID.
 
 4. **Build the STAC catalog** (last cell) with `build_stac_catalog(results)`.
 
