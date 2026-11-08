@@ -169,8 +169,6 @@ Items whose CRS can't be reprojected to WGS84 (local engineering CRS) are writte
 ---
 
 ## Known limitations
-
-- **GSI 基盤地図情報 DEM GML (`FG-GML-*-DEM*.xml`) is not supported.** GDAL can't read it, so these files are reported as `unsupported`. Convert them to GeoTIFF first.
 - Plain Parquet without GeoParquet `geo` metadata, spreadsheets, images without georeferencing, PDFs, etc. are skipped as non-geospatial.
 - Curvilinear datacubes are written without a CRS grid mapping.
 - rasterio's pip wheel bundles GDAL 3.10, which can't read Zarr v3. Use xarray/zarr-python (or conda GDAL ≥ 3.11) to open the datacube outputs, or set `ZARR_FORMAT = 2`.
